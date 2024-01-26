@@ -14,10 +14,8 @@
    <nav class="menu-bar">
       <div class="icon"><%= image_tag 'gear.svg', alt: 'setting-Icon', class: 'image'%></div>
       <div class="icon"><%= image_tag 'file-music.svg', alt: 'music-Icon', class: 'image'%></div>
-      <% @timers.each do |timer| %>
-        <div class="icon"><%= link_to timer_path(timer.id) do %>
+        <div class="icon"><%= link_to timer_path(current_user.id) do %>
         <%= image_tag 'journal-check.svg', alt: 'check-Icon', class: 'image'%><% end %></div>
-      <% end %>
       <% if user_signed_in? %>
         <div class="icon">
           <div class="menu-bar-user">
