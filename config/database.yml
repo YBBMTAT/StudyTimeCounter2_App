@@ -35,7 +35,10 @@ test:
   password:
   host: localhost
   database: StudyTimeCounter2_App_test
-
+  username: root
+  password:
+  host: localhost
+  database: StudyTimeCount_App_test
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
