@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
      if (document.hidden) {
        document.title = "【警告】タイマー停止中";
      } else {
-       document.title = "TimecountApp";
+       document.title = "TimecounterApp";
      }
    });
  
