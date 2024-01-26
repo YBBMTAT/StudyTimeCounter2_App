@@ -19,6 +19,9 @@ default: &default
 
 development:
   <<: *default
+  username: root
+  password:
+  host: localhost
   database: StudyTimeCounter2_App_development
 
 # Warning: The database defined as "test" will be erased and
@@ -27,7 +30,10 @@ development:
 test:
   <<: *default
   database: StudyTimeCounter2_App_test
-
+  username: root
+  password:
+  host: localhost
+  database: StudyTimeCount_App_test
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
 # ever seen by anyone, they now have access to your database.
@@ -50,6 +56,7 @@ test:
 #
 production:
   <<: *default
+  adapter: postgresql
   database: StudyTimeCounter2_App_production
   username: StudyTimeCounter2_App
   password: <%= ENV["STUDYTIMECOUNTER2_APP_DATABASE_PASSWORD"] %>
