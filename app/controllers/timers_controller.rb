@@ -6,8 +6,11 @@ class TimersController < ApplicationController
   def show
     # 累積時間の取得
     @cumulative_time = format_duration(current_user.timers.sum(:duration_seconds))
-    @weekly_time = format_duration(current_user.timers.where(created_at: 1.week.ago..Time.now).sum(:duration_seconds))
-    @month_time = format_duration(current_user.timers.where(created_at: 1.month.ago..Time.now).sum(:duration_seconds))
+    weekly_timers = current_user.timers.where(created_at: 1.week.ago..Time.now)
+    @weekly_time = weekly_timers.present? ? format_duration(weekly_timers.sum(:duration_seconds)) : "No data"
+  
+    monthly_timers = current_user.timers.where(created_at: 1.month.ago..Time.now)
+    @month_time = monthly_timers.present? ? format_duration(monthly_timers.sum(:duration_seconds)) : "No data"
   end
   
   def save

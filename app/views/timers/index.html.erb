@@ -12,10 +12,12 @@
   <body>
  
    <nav class="menu-bar">
-      <div class="icon"><%= image_tag 'gear.svg', alt: 'setting-Icon', class: 'image'%></div>
-      <div class="icon"><%= image_tag 'file-music.svg', alt: 'music-Icon', class: 'image'%></div>
+        <div class="icon"><%= image_tag 'gear.svg', alt: 'setting-Icon', class: 'image'%></div>
+        <div class="icon"><%= image_tag 'file-music.svg', alt: 'music-Icon', class: 'image'%></div>
+       <% if current_user %> 
         <div class="icon"><%= link_to timer_path(current_user.id) do %>
         <%= image_tag 'journal-check.svg', alt: 'check-Icon', class: 'image'%><% end %></div>
+       <% end %> 
       <% if user_signed_in? %>
         <div class="icon">
           <div class="menu-bar-user">
