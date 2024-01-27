@@ -7,7 +7,8 @@
     <h1 class="show-title">これまでの記録</h1>
 
     <h3 class="weekly-time-graph">1週間の記録</h3>
-
+    <%#グラフ表示%>
+    <%= column_chart @daily_study_times, library: { scales: { yAxes: [{ ticks: { beginAtZero: true } }] } } %>
 
     <div class="cumulative-time">
       <h3 class="cumulative-time-title">累計</h3>
