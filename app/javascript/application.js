@@ -2,3 +2,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "timer"
+import "chartkick"
+import "Chart.bundle"
