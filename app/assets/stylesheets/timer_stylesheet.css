@@ -18,3 +18,11 @@
   flex-direction: column; /* 垂直方向に配置 */
   align-items: center;
 }
+
+.break-icon{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin:10px 0 0 0;
+}
+

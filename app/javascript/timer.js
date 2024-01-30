@@ -1,9 +1,11 @@
 const timer = () => {
+  //要素取得
   const timerDisplay = document.getElementById('timer-display');
   const startStopButton = document.getElementById('start-stop-button');
   const breakButton = document.getElementById("break-button");
   const breakTimerDisplay = document.getElementById('break-timer-display');
- 
+  const breakImage = document.querySelector('.break-icon'); 
+
   //インターバル保持
   let timerInterval;
   let breakTimerInterval; 
@@ -73,6 +75,7 @@ const timer = () => {
         breakSeconds++;
         updateBreakTimerDisplay(); // 休憩時間ディスプレイを更新する
       }, 1000);
+      breakImage.style.display = 'block';
      }
     });
 
@@ -82,6 +85,7 @@ const timer = () => {
     breakSeconds = 0;
     updateBreakTimerDisplay();
     breakTimerDisplay.style.display = 'none';
+    breakImage.style.display = 'none';
   });
 
    //サーバーサイドにデータ送信
