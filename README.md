@@ -8,7 +8,7 @@
 このアプリはフォーカス状態が外れると時間カウンターが止まるようになっています。 
 
 ## アプリURL  
-  
+  https://studytimecounter2-app.onrender.com
 
 
 ### ・利用方法
