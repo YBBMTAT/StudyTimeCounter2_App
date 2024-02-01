@@ -33,7 +33,7 @@ class TimersController < ApplicationController
     end
 
     # y軸最大値を計算する
-    @max_study_time = ((study_times.values.max) + 1800) / 3600
+    @max_study_time = ((study_times.values.max) + 3600) / 3600
 
     # 日ごとの時間を配列に追加
     @daily_study_times = dates_in_range.map do |date|
