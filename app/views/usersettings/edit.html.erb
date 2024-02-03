@@ -12,8 +12,8 @@
       <%# 休憩時間設定フォーム %>
       <div class="break-time-form" id= "break-time-form" style="display: none;" >
          <div class="form-group">
-          <%= label_tag :countdown_time, "休憩時間(分)" %>
-          <%= text_field_tag 'usersetting[countdown_time]', current_user.usersetting.try(:countdown_time) %>
+          <%= label_tag :countdown_time, "休憩時間[分]" %>
+          <%= text_field_tag 'usersetting[countdown_time]', (current_user.usersetting.try(:countdown_time)/ 60).to_i %>
          </div>
       </div>
     </div>

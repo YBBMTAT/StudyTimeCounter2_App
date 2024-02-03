@@ -69,8 +69,6 @@ const timer = () => {
     .then(data => {
       const configurationState = data.configuration_state;
       const countdownTime = data.countdown_time;
-        console.log(configurationState);
-        console.log(countdownTime);
 
    //休憩ボタンクリック時の処理
     breakButton.addEventListener('click', function() {
@@ -88,7 +86,6 @@ const timer = () => {
        
         breakTimerInterval = setInterval(function() {
           if (configurationState === true) {
-            console.log("カウントアップ")
            breakSeconds++;
           } else if (configurationState === false) {
             if (breakSeconds > 0) {

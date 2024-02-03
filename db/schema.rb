@@ -34,7 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_03_042234) do
 
   create_table "usersettings", charset: "utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.boolean "configuration_state"
+    t.boolean "configuration_state", default: true
     t.integer "countdown_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
