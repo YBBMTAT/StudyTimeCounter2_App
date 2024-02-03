@@ -33,7 +33,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_02_03_042234) do
   end
 
   create_table "usersettings", charset: "utf8", force: :cascade do |t|
-    t.integer "duration_seconds"
     t.bigint "user_id", null: false
     t.boolean "configuration_state"
     t.integer "countdown_time"
