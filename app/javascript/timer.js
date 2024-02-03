@@ -53,7 +53,7 @@ const timer = () => {
      } else {
          timerInterval = setInterval(function() {
            if (!document.hidden) { //アクティブ状態でのみカウンター機能
-             seconds++;
+             seconds++; //加算処理
              updateTimerDisplay();
            } 
          }, 1000);
@@ -63,21 +63,49 @@ const timer = () => {
      isTimerRunning = !isTimerRunning;
    }
    
+   //usersettingテーブルからデータ取得
+    fetch('/usersettings/countdown_setting')
+    .then(response => response.json())
+    .then(data => {
+      const configurationState = data.configuration_state;
+      const countdownTime = data.countdown_time;
+        console.log(configurationState);
+        console.log(countdownTime);
+
    //休憩ボタンクリック時の処理
-   breakButton.addEventListener('click', function() {
-    if (isTimerRunning) {
-      clearInterval(timerInterval);
-      isTimerRunning = false;
-      startStopButton.textContent = '開始';
-      clearInterval(breakTimerInterval); // 既に休憩時間のインターバルが動いていたらクリアする
-      breakTimerDisplay.style.display = 'block'; // 休憩時間ディスプレイを表示する
-      breakTimerInterval = setInterval(function() {
-        breakSeconds++;
-        updateBreakTimerDisplay(); // 休憩時間ディスプレイを更新する
-      }, 1000);
-      breakImage.style.display = 'block';
-     }
+    breakButton.addEventListener('click', function() {
+      if (isTimerRunning) {
+        clearInterval(timerInterval);
+        isTimerRunning = false;
+        startStopButton.textContent = '開始';
+        clearInterval(breakTimerInterval); // 既に休憩時間のインターバルが動いていたらクリアする
+        breakTimerDisplay.style.display = 'block'; // 休憩時間ディスプレイを表示する
+       
+        // カウントダウンモードの場合のみ初期化
+        if (configurationState === false) {
+          breakSeconds = countdownTime;
+        }
+       
+        breakTimerInterval = setInterval(function() {
+          if (configurationState === true) {
+            console.log("カウントアップ")
+           breakSeconds++;
+          } else if (configurationState === false) {
+            if (breakSeconds > 0) {
+              breakSeconds--;
+            } else {
+              clearInterval(breakTimerInterval); // 時間が0になったらタイマーを停止
+            }
+          }
+          updateBreakTimerDisplay(); // 休憩時間ディスプレイを更新する
+        }, 1000);
+        breakImage.style.display = 'block';
+      }
     });
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 
    // 開始ボタンを押したら休憩時間のカウントをリセットする
    startStopButton.addEventListener('click', function() {
@@ -86,7 +114,7 @@ const timer = () => {
     updateBreakTimerDisplay();
     breakTimerDisplay.style.display = 'none';
     breakImage.style.display = 'none';
-  });
+   });
 
    //サーバーサイドにデータ送信
    function saveTimeData(durationSeconds) {

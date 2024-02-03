@@ -12,6 +12,14 @@ class UsersettingsController < ApplicationController
     end
   end
 
+  def countdown_setting
+    @usersetting = current_user.usersetting
+    render json: { 
+      configuration_state: @usersetting.configuration_state,
+      countdown_time: @usersetting.countdown_time 
+    }
+  end
+
   private
 
   def set_usersetting
