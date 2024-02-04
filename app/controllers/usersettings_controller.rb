@@ -1,5 +1,7 @@
 class UsersettingsController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update]
   before_action :set_usersetting, only: [:edit, :update]
+  before_action :check_usersetting_owner, only: [:edit]
   
 
   def edit
@@ -24,9 +26,15 @@ class UsersettingsController < ApplicationController
 
 private
 
-  def set_usersetting
-    @usersetting = current_user.usersetting || current_user.build_usersetting
+def set_usersetting
+  @usersetting = Usersetting.find(params[:id])
+end
+
+def check_usersetting_owner
+  unless current_user == @usersetting.user
+    redirect_to root_path, alert: "他のユーザーの設定を編集することはできません。"
   end
+end
 
   def usersetting_params
     converted_countdown_time = params[:usersetting][:countdown_time].to_i * 60

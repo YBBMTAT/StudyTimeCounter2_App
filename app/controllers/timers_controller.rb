@@ -1,9 +1,16 @@
 class TimersController < ApplicationController
+  before_action :authenticate_user!, only: [:save, :show]
   def index
 
   end
 
   def show
+    #本人以外のアクセス制限
+    @timer = Timer.find(params[:id])
+    if @timer.user_id != current_user.id
+      redirect_to root_path
+    end
+
     # 累積時間の取得
     @cumulative_time = format_duration(current_user.timers.sum(:duration_seconds))
      weekly_timers = current_user.timers.where(created_at: 1.week.ago..Time.now)

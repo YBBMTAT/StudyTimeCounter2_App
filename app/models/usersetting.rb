@@ -1,4 +1,5 @@
 class Usersetting < ApplicationRecord
+  
   def countdown_time_in_seconds
     countdown_time * 60
   end
