@@ -101,8 +101,8 @@ belongs_to :user
 | Column              | Type       | Options                       |
 | ------------------- | ---------- | ----------------------------- |
 | user_id             | references | null: false,foreign_key: true |
-| breaduration        | datetime   |                               |
-| bgmenabled          | enum       | null: false                   |
+| configuration_state | boolean    |                               |
+| countdown_time      | integer    |                               |
 
 ### Association
 belongs_to :user

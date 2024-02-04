@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_26_115134) do
+ActiveRecord::Schema[7.0].define(version: 2024_02_03_042234) do
   create_table "timers", charset: "utf8", force: :cascade do |t|
     t.integer "duration_seconds"
     t.bigint "user_id", null: false
@@ -32,5 +32,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_26_115134) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "usersettings", charset: "utf8", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.boolean "configuration_state", default: true
+    t.integer "countdown_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_usersettings_on_user_id"
+  end
+
   add_foreign_key "timers", "users"
+  add_foreign_key "usersettings", "users"
 end
