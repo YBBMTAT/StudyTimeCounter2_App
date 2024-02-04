@@ -105,9 +105,17 @@ const timer = () => {
     console.error('Error:', error);
   });
 
+  //休憩時間アラート
   function playAlarm() {
     alert("休憩時間が終了しました！");
   }
+
+  document.querySelector('.icon').addEventListener('click', function(e) {
+    if (seconds > 0) {
+      e.preventDefault();
+      alert('ページ移動する場合は終了ボタンを押してからにしてください');
+    }
+  });
 
    // 開始ボタンを押したら休憩時間のカウントをリセットする
    startStopButton.addEventListener('click', function() {
@@ -153,7 +161,7 @@ const timer = () => {
      }
    });
  
- };
+  };
 
 window.addEventListener("turbo:load", timer);
 window.addEventListener("turbo:render",timer);
