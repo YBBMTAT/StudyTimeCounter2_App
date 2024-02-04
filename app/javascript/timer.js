@@ -92,6 +92,7 @@ const timer = () => {
               breakSeconds--;
             } else {
               clearInterval(breakTimerInterval); // 時間が0になったらタイマーを停止
+              playAlarm();
             }
           }
           updateBreakTimerDisplay(); // 休憩時間ディスプレイを更新する
@@ -102,6 +103,18 @@ const timer = () => {
   })
   .catch(error => {
     console.error('Error:', error);
+  });
+
+  //休憩時間アラート
+  function playAlarm() {
+    alert("休憩時間が終了しました！");
+  }
+
+  document.querySelector('.icon').addEventListener('click', function(e) {
+    if (seconds > 0) {
+      e.preventDefault();
+      alert('ページ移動する場合は終了ボタンを押してからにしてください');
+    }
   });
 
    // 開始ボタンを押したら休憩時間のカウントをリセットする
@@ -148,7 +161,7 @@ const timer = () => {
      }
    });
  
- };
+  };
 
 window.addEventListener("turbo:load", timer);
 window.addEventListener("turbo:render",timer);

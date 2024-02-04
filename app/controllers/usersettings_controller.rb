@@ -27,13 +27,13 @@ class UsersettingsController < ApplicationController
 private
 
 def set_usersetting
-  @usersetting = Usersetting.find(params[:id])
+  @usersetting = Usersetting.find_by(id: params[:id])
+  redirect_to root_path unless @usersetting
 end
 
 def check_usersetting_owner
-  unless current_user == @usersetting.user
-    redirect_to root_path, alert: "他のユーザーの設定を編集することはできません。"
-  end
+  return unless @usersetting
+  redirect_to root_path unless current_user == @usersetting.user
 end
 
   def usersetting_params
