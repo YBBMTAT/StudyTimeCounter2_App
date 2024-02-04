@@ -1,11 +1,12 @@
 class UsersettingsController < ApplicationController
   before_action :set_usersetting, only: [:edit, :update]
+  
 
   def edit
+
   end
 
   def update
-    puts "updateパラムス: #{params.inspect}"
     if @usersetting.update(usersetting_params)
       redirect_to root_path
     else
