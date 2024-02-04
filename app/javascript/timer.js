@@ -92,6 +92,7 @@ const timer = () => {
               breakSeconds--;
             } else {
               clearInterval(breakTimerInterval); // 時間が0になったらタイマーを停止
+              playAlarm();
             }
           }
           updateBreakTimerDisplay(); // 休憩時間ディスプレイを更新する
@@ -103,6 +104,10 @@ const timer = () => {
   .catch(error => {
     console.error('Error:', error);
   });
+
+  function playAlarm() {
+    alert("休憩時間が終了しました！");
+  }
 
    // 開始ボタンを押したら休憩時間のカウントをリセットする
    startStopButton.addEventListener('click', function() {
