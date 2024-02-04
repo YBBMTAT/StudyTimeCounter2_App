@@ -1,21 +1,33 @@
-<h1 class="setting-title">休憩時間の設定</h1>
+<!DOCTYPE html>
+<html>
+ <head>
+    <script src="setting.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeCount_App</title>
+    <link rel="stylesheet" type="text/css" href="edit_stylesheet.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+ </head>
+ <body>
+  <h1 class="setting-title">休憩時間の設定</h1>
 
-
-<%= form_tag(usersetting_path, method: :patch) do %>
-    <div class="setting-container">
-      <div class="count-up">
-        <%= radio_button_tag 'usersetting[configuration_state]', true, current_user.usersetting.try(:configuration_state) == true, id: 'count-up-radio' %>カウントアップ
+  <%= form_tag(usersetting_path, method: :patch) do %>
+      <div class="setting-container">
+        <div class="count-up">
+          <%= radio_button_tag 'usersetting[configuration_state]', true, current_user.usersetting.try(:configuration_state) == true, id: 'count-up-radio' %>カウントアップ
+        </div>
+        <div class="count-down">
+          <%= radio_button_tag 'usersetting[configuration_state]', false, current_user.usersetting.try(:configuration_state) == false, id: 'count-down-radio' %>カウントダウン
+        </div>
+        <%# 休憩時間設定フォーム %>
+        <div class="break-time-form" id= "break-time-form" style="display: none;" >
+          <div class="form-group">
+            <%= label_tag :countdown_time, "休憩時間[分]" %>
+            <%= text_field_tag 'usersetting[countdown_time]', (current_user.usersetting.try(:countdown_time) || 300) / 60 %>
+          </div>
+        </div>
       </div>
-      <div class="count-down">
-        <%= radio_button_tag 'usersetting[configuration_state]', false, current_user.usersetting.try(:configuration_state) == false, id: 'count-down-radio' %>カウントダウン
-      </div>
-      <%# 休憩時間設定フォーム %>
-      <div class="break-time-form" id= "break-time-form" style="display: none;" >
-         <div class="form-group">
-          <%= label_tag :countdown_time, "休憩時間[分]" %>
-          <%= text_field_tag 'usersetting[countdown_time]', (current_user.usersetting.try(:countdown_time) || 300) / 60 %>
-         </div>
-      </div>
-    </div>
-  <%= submit_tag "保存" %>
-<% end %>
+    <%= submit_tag "保存" %>
+  <% end %>
+ </body>
+</html>
