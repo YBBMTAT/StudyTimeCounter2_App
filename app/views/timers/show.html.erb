@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html>
-
+  <head>
+    <script src="setting.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TimeCount_App</title>
+    <link rel="stylesheet" type="text/css" href="show_stylesheet.css">
+  </head>
   <body>
-    <div class="icon"><%= link_to root_path do %>
+    <div class="back-icon"><%= link_to root_path do %>
      <%= image_tag 'arrow-return-left.svg', alt: 'check-Icon', class: 'image'%>
     <% end %></div>
 
@@ -10,33 +16,34 @@
 
     <h3 class="weekly-time-graph">1週間の記録</h3>
     <%#グラフ表示%>
-    <%= column_chart @daily_study_times,
-      xtitle: "日付",
-      ytitle: "時間",
-      max: @max_study_time,
-      maintainAspectRatio: false,
-      width: '600px',
-      height:'300px',
-      maintainAspectRatio: false,
-      library: {
-       scales: { yAxes: [{ ticks: {beginAtZero: true,} }],
-                 xAxes: [{ ticks: {beginAtZero: true} }]}
-            } %>
+    <div class= "graph">
+      <%= column_chart @daily_study_times, 
+        xtitle: "日付",
+        ytitle: "時間",
+        max: @max_study_time,
+        maintainAspectRatio: false,
+        width: '600px',
+        height:'300px',
+        maintainAspectRatio: false,
+        library: {
+        scales: { yAxes: [{ ticks: {beginAtZero: true,} }],
+                  xAxes: [{ ticks: {beginAtZero: true} }]}
+              } %>
+    </div>
 
-    
     <div class="cumulative-time">
       <h3 class="cumulative-time-title">累計</h3>
-      <%= @cumulative_time %>
+      <div class="cumulative-display"><%= @cumulative_time %></div>
     </div>
 
     <div class="weekly-time">
       <h3 class="weekly-time-title">1週間の累計</h3>
-      <%= @weekly_time %>
+      <div class="weekly-display"><%= @weekly_time %></div>
     </div>
     
     <div class="month-time">
       <h3 class="month-time-title">1ヶ月の累計</h3>
-      <%= @month_time %>
+      <div class="month-display"><%= @month_time %></div>
     </div>
 
   </body>

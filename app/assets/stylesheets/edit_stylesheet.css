@@ -1,5 +1,5 @@
 .setting-title {
-  margin: 20px 30px;
+  margin: 20px 30px 30px 30px;
 }
 
 .setting-container {
@@ -13,4 +13,8 @@
 .edit-button {
   padding:5px 20px;
   margin: 0 0 0 30px;
+}
+
+.form-group {
+  padding-top: 10px;
 }
