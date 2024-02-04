@@ -1,4 +1,5 @@
 class UsersettingsController < ApplicationController
+  before_action :authenticate_user!, only: [:edit, :update]
   before_action :set_usersetting, only: [:edit, :update]
   before_action :check_usersetting_owner, only: [:edit]
   
