@@ -1,4 +1,5 @@
 class TimersController < ApplicationController
+  before_action :authenticate_user!, only: [:save, :show]
   def index
 
   end
