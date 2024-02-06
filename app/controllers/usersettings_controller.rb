@@ -26,15 +26,15 @@ class UsersettingsController < ApplicationController
 
 private
 
-  def set_usersetting
-    @usersetting = Usersetting.find_by(id: params[:id])
-    redirect_to root_path unless @usersetting
-  end
+def set_usersetting
+  @usersetting = Usersetting.find_by(id: params[:id])
+  redirect_to root_path unless @usersetting
+end
 
-  def check_usersetting_owner
-    return unless @usersetting
-    redirect_to root_path unless current_user == @usersetting.user
-  end
+def check_usersetting_owner
+  return unless @usersetting
+  redirect_to root_path unless current_user == @usersetting.user
+end
 
   def usersetting_params
     converted_countdown_time = params[:usersetting][:countdown_time].to_i * 60
