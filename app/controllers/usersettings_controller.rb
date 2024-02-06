@@ -12,7 +12,7 @@ class UsersettingsController < ApplicationController
     #更新対象を取得
    @usersetting = Usersetting.find(params[:id])
    #取得した分数を秒に変換(モデル側へ)
-   countdown_time_minutes = params[:usersetting][:countdown_time].to_i
+   countdown_time_minutes = params[:usersetting][:countdown_time].to_f
    countdown_time_seconds = @usersetting.convert_countdown_time(countdown_time_minutes)
 
     if @usersetting.update(usersetting_params.merge(countdown_time: countdown_time_seconds))
