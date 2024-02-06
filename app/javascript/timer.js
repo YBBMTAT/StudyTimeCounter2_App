@@ -19,13 +19,13 @@ const timer = () => {
    const minutes = Math.floor((timeInSeconds % 3600) / 60);
    const seconds = timeInSeconds % 60;
  
-   return (
-     String(hours).padStart(2, '0') +
-     ':' +
-     String(minutes).padStart(2, '0') +
-     ':' +
-     String(seconds).padStart(2, '0') 
-   );
+    return (
+      String(hours).padStart(2, '0') +
+      ':' +
+      String(minutes).padStart(2, '0') +
+      ':' +
+      String(seconds).padStart(2, '0') 
+    );
   }
  
   //ディスプレイ更新関数
@@ -36,7 +36,7 @@ const timer = () => {
     breakTimerDisplay.textContent = formatTime(breakSeconds);
   }
  
-   //イベント発火条件
+  //イベント発火条件
   startStopButton.addEventListener('click', startStopTimer);
  
    //ストップウォッチの内部機能
@@ -59,109 +59,109 @@ const timer = () => {
          }, 1000);
        startStopButton.textContent = '終了';
      }
- 
      isTimerRunning = !isTimerRunning;
    }
    
-   //usersettingテーブルからデータ取得
+    //usersettingテーブルから休憩時間データ取得
     fetch('/usersettings/countdown_setting')
-    .then(response => response.json())
-    .then(data => {
+      .then(response => response.json())
+      .then(data => {
       const configurationState = data.configuration_state;
       const countdownTime = data.countdown_time;
 
-   //休憩ボタンクリック時の処理
-    breakButton.addEventListener('click', function() {
-      if (isTimerRunning) {
-        clearInterval(timerInterval);
-        isTimerRunning = false;
-        startStopButton.textContent = '開始';
-        clearInterval(breakTimerInterval); // 既に休憩時間のインターバルが動いていたらクリアする
-        breakTimerDisplay.style.display = 'block'; // 休憩時間ディスプレイを表示する
-       
-        // カウントダウンモードの場合のみ初期化
-        if (configurationState === false) {
-          breakSeconds = countdownTime;
-        }
-       
-        breakTimerInterval = setInterval(function() {
-          if (configurationState === true) {
-           breakSeconds++;
-          } else if (configurationState === false) {
-            if (breakSeconds > 0) {
-              breakSeconds--;
-            } else {
-              clearInterval(breakTimerInterval); // 時間が0になったらタイマーを停止
-              playAlarm();
-            }
+      //休憩ボタンクリック時の処理
+      breakButton.addEventListener('click', function() {
+        if (isTimerRunning) {
+          clearInterval(timerInterval);
+          isTimerRunning = false;
+          startStopButton.textContent = '開始';
+          clearInterval(breakTimerInterval); // 既に休憩時間のインターバルが動いていたらクリアする
+          breakTimerDisplay.style.display = 'block'; // 休憩時間ディスプレイを表示する
+        
+          // カウントダウンモードの場合のみ初期化
+          if (configurationState === false) {
+            breakSeconds = countdownTime;
           }
-          updateBreakTimerDisplay(); // 休憩時間ディスプレイを更新する
-        }, 1000);
-        breakImage.style.display = 'block';
+        
+          breakTimerInterval = setInterval(function() {
+            if (configurationState === true) {
+            breakSeconds++;
+            } else if (configurationState === false) {
+              if (breakSeconds > 0) {
+                breakSeconds--;
+              } else {
+                clearInterval(breakTimerInterval); // 時間が0になったらタイマーを停止
+                playAlarm();
+              }
+            }
+            updateBreakTimerDisplay(); // 休憩時間ディスプレイを更新する
+          }, 1000);
+          breakImage.style.display = 'block';
+        }
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
+    //休憩時間アラート
+    function playAlarm() {
+      alert("休憩時間が終了しました！");
+    }
+
+    //カウンター起動時の警告
+    document.querySelector('.menu-bar').addEventListener('click', function(e) {
+      if (seconds > 0) {
+        e.preventDefault();
+        alert('ページ移動する場合は終了ボタンを押してからにしてください');
       }
     });
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
 
-  //休憩時間アラート
-  function playAlarm() {
-    alert("休憩時間が終了しました！");
-  }
+    // 開始ボタンを押したら休憩時間のカウントをリセットする
+    startStopButton.addEventListener('click', function() {
+      clearInterval(breakTimerInterval);
+      breakSeconds = 0;
+      updateBreakTimerDisplay();
+      breakTimerDisplay.style.display = 'none';
+      breakImage.style.display = 'none';
+    });
 
-  document.querySelector('.icon').addEventListener('click', function(e) {
-    if (seconds > 0) {
-      e.preventDefault();
-      alert('ページ移動する場合は終了ボタンを押してからにしてください');
+    //サーバーサイドにデータ送信
+    function saveTimeData(durationSeconds) {
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+      fetch('/timers/save',{
+        method: 'POST',
+        //Json形式で送信
+        headers: {
+          'Content-type': 'application/json',
+          'X-CSRF-Token': csrfToken,
+        },
+        //JSON形式のデータ格納
+        body: JSON.stringify({
+          duration_seconds: durationSeconds,
+        }),
+      })
+      //サーバーサイドからのレスポンスをJSON形式で解釈
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error', error);
+      });
     }
-  });
-
-   // 開始ボタンを押したら休憩時間のカウントをリセットする
-   startStopButton.addEventListener('click', function() {
-    clearInterval(breakTimerInterval);
-    breakSeconds = 0;
-    updateBreakTimerDisplay();
-    breakTimerDisplay.style.display = 'none';
-    breakImage.style.display = 'none';
-   });
-
-   //サーバーサイドにデータ送信
-   function saveTimeData(durationSeconds) {
-     const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-     fetch('/timers/save',{
-       method: 'POST',
-       //Json形式で送信
-       headers: {
-        'Content-type': 'application/json',
-        'X-CSRF-Token': csrfToken,
-       },
-       //JSON形式のデータ格納
-       body: JSON.stringify({
-         duration_seconds: durationSeconds,
-       }),
-     })
-     //サーバーサイドからのレスポンスをJSON形式で解釈
-     .then(response => response.json())
-     .then(data => {
-       console.log('Success:', data);
-     })
-     .catch((error) => {
-       console.error('Error', error);
-     });
-   }
  
  
-   //アクティブ状態でのタグ名変更
-   document.addEventListener('visibilitychange', function() {
-     if (document.hidden) {
-       document.title = "【警告】タイマー停止中";
-     } else {
-       document.title = "TimecounterApp";
-     }
-   });
- 
-  };
+    //アクティブ状態でのタグ名変更
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        document.title = "【警告】タイマー停止中";
+      } else {
+        document.title = "TimecounterApp";
+      }
+    });
+  
+    };
 
 window.addEventListener("turbo:load", timer);
 window.addEventListener("turbo:render",timer);
