@@ -9,7 +9,13 @@ class UsersettingsController < ApplicationController
   end
 
   def update
-    if @usersetting.update(usersetting_params)
+    #更新対象を取得
+   @usersetting = Usersetting.find(params[:id])
+   #取得した分数を秒に変換(モデル側へ)
+   countdown_time_minutes = params[:usersetting][:countdown_time].to_f
+   countdown_time_seconds = @usersetting.convert_countdown_time(countdown_time_minutes)
+
+    if @usersetting.update(usersetting_params.merge(countdown_time: countdown_time_seconds))
       redirect_to root_path
     else
       render :edit, status: :unprocessable_entity
@@ -36,9 +42,8 @@ def check_usersetting_owner
   redirect_to root_path unless current_user == @usersetting.user
 end
 
-  def usersetting_params
-    converted_countdown_time = params[:usersetting][:countdown_time].to_i * 60
-    params.require(:usersetting).permit(:configuration_state, :countdown_time).merge(countdown_time: converted_countdown_time)
-  end
+def usersetting_params
+  params.require(:usersetting).permit(:configuration_state, :countdown_time)
+end
   
 end

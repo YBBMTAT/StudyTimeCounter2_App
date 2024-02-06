@@ -1,7 +1,7 @@
 class Usersetting < ApplicationRecord
   
-  def countdown_time_in_seconds
-    countdown_time * 60
+  def convert_countdown_time(minutes)
+    minutes * 60.round(1)
   end
   
   belongs_to :user
