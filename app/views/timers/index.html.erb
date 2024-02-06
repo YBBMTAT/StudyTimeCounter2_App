@@ -38,7 +38,9 @@
       <div class="timer-container">
         <div id="timer-display">00:00:00</div>
         <button id="start-stop-button">開始</button>
-        <button id="break-button">休憩</button>
+        <% if user_signed_in? %>
+         <button id="break-button">休憩</button>
+        <% end %>
         <div id="break-timer-display" style="display: none;">00:00:00</div>
       </div>
       <div class="break-icon" style="display: none;"><%= image_tag 'break_time2.jpg', alt: 'break-time', class: 'break-icon'%></div>
