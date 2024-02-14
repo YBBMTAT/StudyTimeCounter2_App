@@ -60,7 +60,7 @@
 　を加え、他のアプリの閲覧にペナルティを付け、誘惑への抑止力を作りました。 
  　デザインは極力シンプルにし、気が散る要素を少なくしています。
   
-### ~要件定義~  
+### 要件定義  
 URL  
 https://docs.google.com/spreadsheets/d/1ptxiyLg4S5ImzEIbil3VLD9RnU6PJ8Pt/edit#gid=798740072
 
